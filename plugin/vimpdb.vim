@@ -1,3 +1,4 @@
+" vim:set fenc=utf-8 ff=unix :
 
 if exists('g:loaded_vimpdb')
   finish

@@ -1,3 +1,5 @@
+" vim:set fenc=utf-8 ff=unix :
+
 function! vimpdb#test()
   echo "vimpdb test"
 endfunction
