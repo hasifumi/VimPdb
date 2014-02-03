@@ -1,7 +1,7 @@
 " vim:set fenc=utf-8 ff=unix :
 
-function! vimpdb#test()
-  echo "vimpdb test"
+function! vimpdb#Test()
+  echo "vimpdb Test"
 endfunction
 
 "function! vimpdb#initialize()
@@ -17,10 +17,10 @@ endfunction
 function! vimpdb#Initialize()
 	" Initializes the VimPdb pluging.
 
-	au BufLeave *.py :call vimpdb#BuffLeave()
-	au BufEnter *.py :call vimpdb#BuffEnter()
-	au BufEnter *.py :call vimpdb#MapKeyboard()
-	au VimLeave *.py :call vimpdb#StopDebug()
+	"au BufLeave *.py :call vimpdb#BuffLeave()
+	"au BufEnter *.py :call vimpdb#BuffEnter()
+	"au BufEnter *.py :call vimpdb#MapKeyboard()
+	"au VimLeave *.py :call vimpdb#StopDebug()
 
 	"call vimpdb#MapKeyboard()
 
@@ -106,6 +106,9 @@ function! vimpdb#BuffEnter()
 	" Used when entering a new buffer - highlighting all breakpoints, etc (if there are any).
 
 	python <<EOF
+  wq
+  :wq
+  :wq
 if (vim_pdb.is_debugged()):
 	file('out.txt', 'a').write('BuffEnter\n')
 	vim_pdb.add_queued_method('highlight_current_line_for_file', vim.current.buffer.name)
@@ -581,5 +584,5 @@ let g:default_breakpoints_filename = "bplist.vpb"
 "
 
 
-call vimpdb#Initialize()
+" call vimpdb#Initialize()
 
