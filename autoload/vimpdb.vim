@@ -11,6 +11,7 @@ endfunction
 "  "exe 'python sys.path.insert(0, r"' . current_dir . '")'
 "  "python import VimPdb
 "  "python import VimPdb
+"  "python import VimPdb
 "endfunction
 
 function! vimpdb#Initialize()
