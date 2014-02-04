@@ -6,11 +6,22 @@ endfunction"}}}
 
 function! vimpdb#test2()"{{{
   echo "vimpdb Test2"
-	let current_dir = expand("%:p:h")
+	"let current_dir = expand("%:p:h")
+  let files = globpath(&runtimepath, "autoload/vimpdb.vim")
+  let file = split(files, "\n")
+  if empty(file)
+    throw 'vimpdb.vim not found'
+    finish
+  endif
+  echo file
+	"let current_dir = expand("<sfile>")
+  let current_dir = substitute(file[0], '\v(/.*)/(.*)', '\1', '')
   let parent_dir = substitute(current_dir, '\v(/.*)/(.*)', '\1', '')
+  echo current_dir
+  echo parent_dir
 	python import sys
 	"exe 'python sys.path.insert(0, "' . current_dir . '")'
-	exe 'python sys.path.insert(0, "' . parent_dir . '")'
+	exe 'python sys.path.insert(0, r"' . parent_dir . '")'
 	python import VimPdb
 endfunction"}}}
 
@@ -24,7 +35,8 @@ function! vimpdb#Initialize()"{{{
 
 	"call vimpdb#MapKeyboard()
 
-	let current_dir = expand("%:p:h")
+	"let current_dir = expand("%:p:h")
+	let current_dir = expand("<sfile>:p:h")
   let parent_dir = substitute(current_dir, '\v(/.*)/(.*)', '\1', '')
 	python import sys
 	exe 'python sys.path.insert(0, "' . parent_dir . '")'
