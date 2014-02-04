@@ -1,20 +1,20 @@
-" vim:set fenc=utf-8 ff=unix :
+" vim:set fenc=utf-8 ff=unix foldmethod=marker :
 
-function! vimpdb#Test()
+function! vimpdb#Test()"{{{
   echo "vimpdb Test"
-endfunction
+endfunction"}}}
 
-"function! vimpdb#initialize()
-"  let current_dir = expand("<sfile>:h")
-"  python import sys
-"  python print sys.path
-"  "exe 'python sys.path.insert(0, r"' . current_dir . '")'
-"  "python import VimPdb
-"  "python import VimPdb
-"  "python import VimPdb
-"endfunction
+function! vimpdb#test2()"{{{
+  echo "vimpdb Test2"
+	let current_dir = expand("%:p:h")
+  let parent_dir = substitute(current_dir, '\v(/.*)/(.*)', '\1', '')
+	python import sys
+	"exe 'python sys.path.insert(0, "' . current_dir . '")'
+	exe 'python sys.path.insert(0, "' . parent_dir . '")'
+	python import VimPdb
+endfunction"}}}
 
-function! vimpdb#Initialize()
+function! vimpdb#Initialize()"{{{
 	" Initializes the VimPdb pluging.
 
 	"au BufLeave *.py :call vimpdb#BuffLeave()
@@ -24,9 +24,10 @@ function! vimpdb#Initialize()
 
 	"call vimpdb#MapKeyboard()
 
-	let current_dir = expand("<sfile>:h")
+	let current_dir = expand("%:p:h")
+  let parent_dir = substitute(current_dir, '\v(/.*)/(.*)', '\1', '')
 	python import sys
-	exe 'python sys.path.insert(0, r"' . current_dir . '")'
+	exe 'python sys.path.insert(0, "' . parent_dir . '")'
 	python import VimPdb
 
 	python << EOF
@@ -84,7 +85,7 @@ def parse_command_line(line):
 	return args
 EOF
 
-endfunction
+endfunction"}}}
 
 
 
@@ -106,9 +107,6 @@ function! vimpdb#BuffEnter()
 	" Used when entering a new buffer - highlighting all breakpoints, etc (if there are any).
 
 	python <<EOF
-  wq
-  :wq
-  :wq
 if (vim_pdb.is_debugged()):
 	file('out.txt', 'a').write('BuffEnter\n')
 	vim_pdb.add_queued_method('highlight_current_line_for_file', vim.current.buffer.name)
@@ -383,7 +381,7 @@ endfunction
 
 
 
-function vimpdb#ClearAllBreakpointsInCurrentFile()
+function! vimpdb#ClearAllBreakpointsInCurrentFile()
 	" Clears all breakpoints in the current file.
 
 	python << EOF
@@ -394,7 +392,7 @@ else:
 EOF
 endfunction
 
-function vimpdb#ClearAllBreakpoints()
+function! vimpdb#ClearAllBreakpoints()
 	" Clears all breakpoints in all files.
 
 	python << EOF
